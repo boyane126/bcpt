@@ -27,5 +27,6 @@ func NewCmdShow() *cobra.Command {
 
 func Run(args []string) error {
 	fmt.Println(args)
+
 	return nil
 }
