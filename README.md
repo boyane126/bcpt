@@ -29,3 +29,8 @@ bcptctl login -f xiaohongshu -s ./xiaohongshu_storeQr.png
 ### 发布视频
 
 ### 发布图文
+
+## 作者
+
+- [@boyane126](https://github.com/boyane126)
+- 邮箱: 2628488871@qq.com
