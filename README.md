@@ -16,19 +16,9 @@ bcptctl xiaohongshu login
 # 发布图文 ./bcptctl xiaohongshu pubImgText 标题 /home/rsh/Code/go/src/bcpt/cmd/bcptctl/212957.jpeg 简介
 bcptctl xiaohongshu pub_img_text
 
-# 发布视频
+# 发布视频 ./bcptctl xiaohongshu pubVideo test视频 /home/rsh/Code/go/src/bcpt/cmd/bcptctl/test.mp4 /home/rsh/Code/go/src/bcpt/cmd/bcptctl/212957.jpeg test简介
 bcptctl xiaohongshu pub_video 
 ```
-
-### 获取登录二维码
-```shell
-# -f 平台 -s 登录二维码存储路径
-bcptctl login -f xiaohongshu -s ./xiaohongshu_storeQr.png
-```
-
-### 发布视频
-
-### 发布图文
 
 ## 作者
 

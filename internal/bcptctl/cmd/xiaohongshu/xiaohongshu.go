@@ -1,6 +1,7 @@
 package xiaohongshu
 
 import (
+	"github.com/boyane126/bcpt/internal/bcptctl/cmd/xiaohongshu/pub_video"
 	"github.com/spf13/cobra"
 
 	"github.com/boyane126/bcpt/internal/bcptctl/cmd/xiaohongshu/login"
@@ -20,6 +21,7 @@ func NewCmdXiaohongshu() *cobra.Command {
 	cmd.AddCommand(
 		login.NewCmdLogin(),
 		pub_img_text.NewCmdPubImgText(),
+		pub_video.NewCmdPubVideo(),
 	)
 
 	return cmd

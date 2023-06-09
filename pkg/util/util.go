@@ -8,7 +8,7 @@ func CheckErr(err error) {
 	}
 }
 
-func HasImagesSuffixes(fileSuf string, suffixes []string) bool {
+func HasFileSuffixes(fileSuf string, suffixes []string) bool {
 	for _, suffix := range suffixes {
 		if suffix == fileSuf {
 			return true

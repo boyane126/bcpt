@@ -57,6 +57,24 @@ func CheckLoginStatus() chromedp.ActionFunc {
 	}
 }
 
+// 如果没有登录，直接退出
+func IsLoginStatus() chromedp.ActionFunc {
+	return func(ctx context.Context) (err error) {
+		time.Sleep(2 * time.Second)
+		chromedp.Navigate("https://creator.xiaohongshu.com/creator/home")
+		var url string
+		time.Sleep(2 * time.Second)
+		if err = chromedp.Evaluate(`window.location.href`, &url).Do(ctx); err != nil {
+			return
+		}
+
+		if strings.Contains(url, "https://creator.xiaohongshu.com/creator/home") {
+			return nil
+		}
+		return fmt.Errorf("未登录 url=%s", url)
+	}
+}
+
 func GetCode(storeQrPos string) chromedp.ActionFunc {
 	return func(ctx context.Context) error {
 		var code []byte
@@ -124,7 +142,7 @@ func AddContent(content string) chromedp.ActionFunc {
 
 		time.Sleep(5 * time.Second)
 
-		if _, exp, err := runtime.Evaluate(`document.querySelector("#publisher-dom > div > div.publisher-container > div > div.img-post > div.content > div.submit > button.css-k3hpu2.css-osq2ks.dyn.publishBtn.red").click()`).Do(ctx); err != nil || exp != nil {
+		if _, exp, err := runtime.Evaluate(`document.querySelector(".submit > button.css-k3hpu2.css-osq2ks.dyn.publishBtn.red").click()`).Do(ctx); err != nil || exp != nil {
 			return err
 		}
 		time.Sleep(2 * time.Second)

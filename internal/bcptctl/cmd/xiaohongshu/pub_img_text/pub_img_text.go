@@ -61,7 +61,7 @@ func verify(args []string) error {
 		return fmt.Errorf("封面图不能为空")
 	}
 	suf := util.GetFileSuffix(cover)
-	if !util.HasImagesSuffixes(suf, allowImagesSuffixes) {
+	if !util.HasFileSuffixes(suf, allowImagesSuffixes) {
 		return fmt.Errorf("文件后缀必须在以下之内 %v 当前文件后缀 %s", allowImagesSuffixes, suf)
 	}
 	if !util.HasFileExist(cover) {
