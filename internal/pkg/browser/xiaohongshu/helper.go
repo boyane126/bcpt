@@ -3,13 +3,13 @@ package xiaohongshu
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"strings"
 	"time"
 
 	"github.com/chromedp/cdproto/network"
+	"github.com/chromedp/cdproto/runtime"
 	"github.com/chromedp/chromedp"
 
 	"github.com/boyane126/bcpt/pkg/util"
@@ -27,7 +27,7 @@ func LoadCookies() chromedp.ActionFunc {
 		}
 
 		// 如果存在则读取cookies的数据
-		cookiesData, err := ioutil.ReadFile(CookiesTmp)
+		cookiesData, err := os.ReadFile(CookiesTmp)
 		if err != nil {
 			return err
 		}
@@ -112,4 +112,23 @@ func SaveCookies() chromedp.ActionFunc {
 		}
 		return
 	}
+}
+
+func AddContent(content string) chromedp.ActionFunc {
+	return func(ctx context.Context) error {
+		if _, exp, err := runtime.
+			Evaluate(fmt.Sprintf("document.querySelector('#post-textarea').innerHTML = '%s';", content)).
+			Do(ctx); err != nil || exp != nil {
+			return err
+		}
+
+		time.Sleep(5 * time.Second)
+
+		if _, exp, err := runtime.Evaluate(`document.querySelector("#publisher-dom > div > div.publisher-container > div > div.img-post > div.content > div.submit > button.css-k3hpu2.css-osq2ks.dyn.publishBtn.red").click()`).Do(ctx); err != nil || exp != nil {
+			return err
+		}
+		time.Sleep(2 * time.Second)
+		return nil
+	}
+
 }

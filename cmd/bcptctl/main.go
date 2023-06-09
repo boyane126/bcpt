@@ -4,12 +4,12 @@ import (
 	"log"
 	"os"
 
-	"github.com/boyane126/bcpt/internal/bcptctl/cmd"
+	"github.com/boyane126/bcpt/internal/bcptctl"
 )
 
 func main() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
-	command := cmd.NewDefaultBCPTCommand()
+	command := bcptctl.NewDefaultBCPTCommand()
 	if err := command.Execute(); err != nil {
 		log.Println(err)
 		os.Exit(1)

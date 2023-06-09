@@ -1,0 +1,48 @@
+run:
+  skip-dirs: # 设置要忽略的目录
+  skip-files: # 设置不需要检查的go源码文件，支持正则匹配
+output:
+  format: json
+  print-issued-lines: false
+  print-linter-name: false
+  unique-by-line: false
+  path-prefix: ""
+  sort-results: false
+linters-settings:
+  errcheck:
+    check-type-assertinons: true
+    check-blank: false
+  gci:
+    # 将以`github.com/boyane126`开头的包放在第三方包后面
+    local-prefixes: github.com/boyane126
+  godox:
+    keywords:
+      - BUG
+      - FIXME
+      - OPTIMIZE
+      - HACK
+  goimports:
+    # 设置那些包放在第三方包后面，可以设置多个包，逗号隔开
+    local-prefixes: github.com/boyane126
+  gomoddirectives: # 设置允许在go.mod中replace的包
+    replace-local: true
+    replace-allow-list:
+      - github.com/coreos/etcd
+  gomodguard: # 下面是根据需要选择可以使用的包和版本
+    allowed:
+      modules:
+        - gorm.io/gorm
+        - gorm.io/driver/mysql
+      domains:
+        - google.golang.org
+        - gopkg.in
+        - golang.org
+        - github.com
+        - go.uber.org
+  lll:
+    line-length: 240
+  importas: # 设置包的alias,可选，根据需要设置
+linters:
+  disable-all: true
+  enable: # enable 下列出 <期望的所有linters>
+    - typecheck

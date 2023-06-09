@@ -20,3 +20,15 @@ func CreateFile(file string) (*os.File, error) {
 
 	return os.OpenFile(file, os.O_RDWR|os.O_CREATE, os.ModePerm)
 }
+
+// 获取文件后缀名
+func GetFileSuffix(filename string) string {
+	suf := path.Ext(path.Base(filename))
+	return suf[1:]
+}
+
+// 验证文件是否存在
+func HasFileExist(path string) bool {
+	_, err := os.Lstat(path)
+	return !os.IsNotExist(err)
+}

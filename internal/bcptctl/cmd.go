@@ -1,23 +1,23 @@
-package cmd
+package bcptctl
 
 import (
 	"fmt"
-	"io"
 	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
+	"github.com/boyane126/bcpt/internal/bcptctl/cmd/xiaohongshu"
 	"github.com/boyane126/bcpt/internal/bcptctl/util/templates"
 )
 
 var cfgFile string
 
 func NewDefaultBCPTCommand() *cobra.Command {
-	return NewBCPTCommand(os.Stdin, os.Stdout, os.Stderr)
+	return NewBCPTCommand()
 }
 
-func NewBCPTCommand(in io.Reader, out, err io.Writer) *cobra.Command {
+func NewBCPTCommand() *cobra.Command {
 	rootCmd := &cobra.Command{
 		Use:   "bcptctl",
 		Short: "bcptctl controls the bcpt platform",
@@ -31,14 +31,14 @@ func NewBCPTCommand(in io.Reader, out, err io.Writer) *cobra.Command {
 
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.cobra.yaml)")
-	rootCmd.PersistentFlags().StringP("author", "a", "", "author name for copyright attribution")
-	rootCmd.PersistentFlags().Bool("viper", true, "use Viper for configuration")
-	viper.BindPFlag("author", rootCmd.PersistentFlags().Lookup("author"))
-	viper.BindPFlag("useViper", rootCmd.PersistentFlags().Lookup("viper"))
-	viper.SetDefault("author", "NAME HERE <EMAIL ADDRESS>")
+	//rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.cobra.yaml)")
+	//rootCmd.PersistentFlags().StringP("author", "a", "", "author name for copyright attribution")
+	//rootCmd.PersistentFlags().Bool("viper", true, "use Viper for configuration")
+	//viper.BindPFlag("author", rootCmd.PersistentFlags().Lookup("author"))
+	//viper.BindPFlag("useViper", rootCmd.PersistentFlags().Lookup("viper"))
+	//viper.SetDefault("author", "NAME HERE <EMAIL ADDRESS>")
 
-	rootCmd.AddCommand(NewCmdLogin())
+	rootCmd.AddCommand(xiaohongshu.NewCmdXiaohongshu())
 
 	return rootCmd
 }
@@ -49,14 +49,11 @@ func runHelp(cmd *cobra.Command, args []string) {
 
 func initConfig() {
 	if cfgFile != "" {
-		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
 	} else {
-		// Find home directory.
 		home, err := os.UserHomeDir()
 		cobra.CheckErr(err)
 
-		// Search config in home directory with name ".cobra" (without extension).
 		viper.AddConfigPath(home)
 		viper.SetConfigType("yaml")
 		viper.SetConfigName(".cobra")

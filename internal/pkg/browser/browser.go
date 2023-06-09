@@ -4,7 +4,6 @@ package browser
 
 import (
 	"context"
-
 	"github.com/chromedp/chromedp"
 )
 
@@ -14,5 +13,6 @@ var (
 )
 
 func init() {
-	ChromeCtx, ChromeCancel = chromedp.NewContext(context.Background())
+	ChromeCtx, ChromeCancel = chromedp.NewExecAllocator(context.Background())
+	//ChromeCtx, ChromeCancel = chromedp.NewContext(ChromeCtx, chromedp.WithLogf(log.Printf)) // debug模式
 }
