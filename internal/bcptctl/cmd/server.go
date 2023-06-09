@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+
 	"github.com/boyane126/bcpt/internal/pkg/browser"
 	"github.com/boyane126/bcpt/internal/pkg/browser/xiaohongshu"
 )

@@ -1,8 +1,9 @@
 package xiaohongshu
 
 import (
-	"github.com/boyane126/bcpt/internal/pkg/browser"
 	"github.com/chromedp/chromedp"
+
+	"github.com/boyane126/bcpt/internal/pkg/browser"
 )
 
 func NewXiaohongshu() browser.AppContentMar {
@@ -13,7 +14,6 @@ type Xiaohongshu struct {
 	browser.BaseAppContentMar
 }
 
-// loginQRCode.png
 func (x Xiaohongshu) Login(burl browser.BURL, storeQrPos string) error {
 	tasks := chromedp.Tasks{
 		// 加载cookies

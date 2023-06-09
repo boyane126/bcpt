@@ -1,16 +1,16 @@
 package xiaohongshu
 
 import (
+	"context"
 	"fmt"
-	"github.com/chromedp/cdproto/network"
-	"github.com/chromedp/chromedp"
 	"io/ioutil"
 	"log"
 	"os"
 	"strings"
 	"time"
 
-	"context"
+	"github.com/chromedp/cdproto/network"
+	"github.com/chromedp/chromedp"
 )
 
 const (

@@ -1,9 +1,11 @@
 package cmd
 
 import (
-	"github.com/boyane126/bcpt/internal/bcptctl/cmd/util"
-	"github.com/spf13/cobra"
 	"log"
+
+	"github.com/spf13/cobra"
+
+	"github.com/boyane126/bcpt/internal/bcptctl/cmd/util"
 )
 
 var (
@@ -20,7 +22,6 @@ func NewCmdLogin() *cobra.Command {
 			util.CheckErr(Run(args))
 		},
 	}
-	//cmd.SetHelpTemplate("bcptctl login -p xiaohongshu ")
 
 	cmd.Flags().StringVarP(&platform, "platform", "p", "", "请使用 [xiaohongshu]")
 	cmd.Flags().StringVarP(&storeQrPos, "storeQrPos", "s", "", "存储登录二维码位置，默认存放在当前文件夹./xxxx_loginQRCode.png")
