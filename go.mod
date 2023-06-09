@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/MakeNowJust/heredoc/v2 v2.0.1
+	github.com/chromedp/cdproto v0.0.0-20230220211738-2b1ec77315c9
 	github.com/chromedp/chromedp v0.9.1
 	github.com/marmotedu/errors v1.0.2
 	github.com/marmotedu/iam v1.7.0
@@ -17,7 +18,6 @@ require (
 
 require (
 	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
-	github.com/chromedp/cdproto v0.0.0-20230220211738-2b1ec77315c9 // indirect
 	github.com/chromedp/sysutil v1.0.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/gobwas/httphead v0.1.0 // indirect

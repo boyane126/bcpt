@@ -8,7 +8,6 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	"github.com/boyane126/bcpt/internal/bcptctl/cmd/show"
 	"github.com/boyane126/bcpt/internal/bcptctl/util/templates"
 )
 
@@ -28,49 +27,18 @@ func NewBCPTCommand(in io.Reader, out, err io.Writer) *cobra.Command {
 		Find more information at:
 			https://github.com/boyane126/bcpt/README.md`),
 		Run: runHelp,
-		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
-			return initProfiling()
-		},
-		PersistentPostRunE: func(*cobra.Command, []string) error {
-			return flushProfiling()
-		},
 	}
-
-	flags := rootCmd.PersistentFlags()
-	addProfilingFlags(flags)
-
-	_ = viper.BindPFlags(flags)
 
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.cobra.yaml)")
-	rootCmd.PersistentFlags().StringP("author", "a", "YOUR NAME", "author name for copyright attribution")
+	rootCmd.PersistentFlags().StringP("author", "a", "", "author name for copyright attribution")
 	rootCmd.PersistentFlags().Bool("viper", true, "use Viper for configuration")
 	viper.BindPFlag("author", rootCmd.PersistentFlags().Lookup("author"))
 	viper.BindPFlag("useViper", rootCmd.PersistentFlags().Lookup("viper"))
 	viper.SetDefault("author", "NAME HERE <EMAIL ADDRESS>")
-	viper.SetDefault("license", "apache")
 
-	groups := templates.CommandGroups{
-		{
-			Message: "Basic Commands:",
-			Commands: []*cobra.Command{
-				show.NewCmdShow(),
-				// color.NewCmdColor(f, ioStreams),
-			},
-		},
-		//{
-		//	Message: "Identity and Access Management Commands:",
-		//	Commands: []*cobra.Command{
-		//		user.NewCmdUser(f, ioStreams),
-		//		policy.NewCmdPolicy(f, ioStreams),
-		//	},
-		//},
-	}
-	groups.Add(rootCmd)
-
-	filters := []string{"options"}
-	templates.ActsAsRootCommand(rootCmd, filters, groups...)
+	rootCmd.AddCommand(NewCmdLogin())
 
 	return rootCmd
 }
