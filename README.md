@@ -13,7 +13,7 @@ BCPT = Boyane of content publishing tool
 # 获取登录二维码
 bcptctl xiaohongshu login
 
-# 发布图文
+# 发布图文 ./bcptctl xiaohongshu pubImgText 标题 /home/rsh/Code/go/src/bcpt/cmd/bcptctl/212957.jpeg 简介
 bcptctl xiaohongshu pub_img_text
 
 # 发布视频
