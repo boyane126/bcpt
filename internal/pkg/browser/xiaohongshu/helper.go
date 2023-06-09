@@ -11,10 +11,12 @@ import (
 
 	"github.com/chromedp/cdproto/network"
 	"github.com/chromedp/chromedp"
+
+	"github.com/boyane126/bcpt/pkg/util"
 )
 
 const (
-	CookiesTmp = "xiaohongshu_cookies.tmp"
+	CookiesTmp = "./tmp/xiaohongshu_cookies.tmp"
 )
 
 func LoadCookies() chromedp.ActionFunc {
@@ -43,7 +45,7 @@ func LoadCookies() chromedp.ActionFunc {
 func CheckLoginStatus() chromedp.ActionFunc {
 	return func(ctx context.Context) (err error) {
 		var url string
-		time.Sleep(4 * time.Second)
+		time.Sleep(2 * time.Second)
 		if err = chromedp.Evaluate(`window.location.href`, &url).Do(ctx); err != nil {
 			return
 		}
@@ -101,7 +103,11 @@ func SaveCookies() chromedp.ActionFunc {
 		}
 
 		// 3. 存储到临时文件
-		if err = ioutil.WriteFile(CookiesTmp, cookiesData, 0o755); err != nil {
+		f, err := util.CreateFile(CookiesTmp)
+		if err != nil {
+			return
+		}
+		if _, err = f.Write(cookiesData); err != nil {
 			return
 		}
 		return

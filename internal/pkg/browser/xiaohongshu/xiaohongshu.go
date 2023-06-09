@@ -1,7 +1,9 @@
 package xiaohongshu
 
 import (
+	"context"
 	"github.com/chromedp/chromedp"
+	"time"
 
 	"github.com/boyane126/bcpt/internal/pkg/browser"
 )
@@ -30,9 +32,10 @@ func (x Xiaohongshu) Login(burl browser.BURL, storeQrPos string) error {
 		SaveCookies(),
 	}
 
-	defer browser.ChromeCancel()
+	ctx, cancel := context.WithTimeout(browser.ChromeCtx, time.Second*30)
+	defer cancel()
 
-	if err := chromedp.Run(browser.ChromeCtx, tasks); err != nil {
+	if err := chromedp.Run(ctx, tasks); err != nil {
 		return err
 	}
 

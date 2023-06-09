@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"log"
-
 	"github.com/spf13/cobra"
+	"log"
+	"os"
 
 	"github.com/boyane126/bcpt/internal/bcptctl/cmd/util"
 )
@@ -30,6 +30,7 @@ func NewCmdLogin() *cobra.Command {
 }
 
 func Run(args []string) error {
+
 	mar, err := NewServer(Platform(platform))
 	if err != nil {
 		return err
@@ -37,6 +38,15 @@ func Run(args []string) error {
 	if len(storeQrPos) > 0 {
 		mar.storeQr = storeQrPos
 	}
+
+	defer func() {
+		if err := os.RemoveAll(mar.storeQr); err != nil {
+			log.Println("删除二维码失败")
+		} else {
+			log.Println("删除二维码成功")
+		}
+	}()
+
 	if err = mar.app.Login(mar.loginUrl, mar.storeQr); err != nil {
 		return err
 	}
