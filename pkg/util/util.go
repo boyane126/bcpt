@@ -3,7 +3,9 @@ package util
 import "fmt"
 
 func CheckErr(err error) {
-	fmt.Println(err)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 func HasImagesSuffixes(fileSuf string, suffixes []string) bool {

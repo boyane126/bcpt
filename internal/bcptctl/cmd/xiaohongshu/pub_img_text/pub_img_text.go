@@ -3,6 +3,7 @@ package pub_img_text //nolint:typecheck
 import (
 	"fmt"
 	"github.com/spf13/cobra"
+	"log"
 
 	"github.com/boyane126/bcpt/internal/pkg/browser"
 	"github.com/boyane126/bcpt/internal/pkg/browser/xiaohongshu"
@@ -35,7 +36,7 @@ func Run(args []string) error {
 		return err
 	}
 
-	title, cover, desc, _ := args[0], args[1], args[2], args[3]
+	title, cover, desc := args[0], args[1], args[2]
 	// TODO 多图暂时放弃
 
 	// 组装发布内容参数
@@ -50,11 +51,12 @@ func Run(args []string) error {
 		return err
 	}
 
+	log.Println("发布成功")
 	return nil
 }
 
 func verify(args []string) error {
-	_, cover, _, _ := args[0], args[1], args[2], args[3]
+	_, cover, _ := args[0], args[1], args[2]
 	if len(cover) == 0 {
 		return fmt.Errorf("封面图不能为空")
 	}
