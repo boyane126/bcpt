@@ -60,8 +60,10 @@ func CheckLoginStatus() chromedp.ActionFunc {
 // 如果没有登录，直接退出
 func IsLoginStatus() chromedp.ActionFunc {
 	return func(ctx context.Context) (err error) {
-		time.Sleep(2 * time.Second)
-		chromedp.Navigate("https://creator.xiaohongshu.com/creator/home")
+		if _, _, err = runtime.Evaluate(`window.location.href = "https://creator.xiaohongshu.com/creator/home"`).Do(ctx); err != nil {
+			log.Println(err)
+			return
+		}
 		var url string
 		time.Sleep(2 * time.Second)
 		if err = chromedp.Evaluate(`window.location.href`, &url).Do(ctx); err != nil {
@@ -140,12 +142,29 @@ func AddContent(content string) chromedp.ActionFunc {
 			return err
 		}
 
-		time.Sleep(5 * time.Second)
+		time.Sleep(10 * time.Second)
 
 		if _, exp, err := runtime.Evaluate(`document.querySelector(".submit > button.css-k3hpu2.css-osq2ks.dyn.publishBtn.red").click()`).Do(ctx); err != nil || exp != nil {
 			return err
 		}
-		time.Sleep(2 * time.Second)
+
+		time.Sleep(time.Second)
+
+		var code []byte
+		// 截图
+		if err := chromedp.Screenshot(`#page`, &code, chromedp.ByID).Do(ctx); err != nil {
+			return err
+		}
+		// 保存为图片文件
+		if err := os.WriteFile("./debug.png", code, 0o644); err != nil {
+			log.Fatal(err)
+		}
+
+		if err := chromedp.WaitVisible(`.success-container`, chromedp.ByQuery).Do(ctx); err != nil {
+			log.Println(err)
+			return err
+		}
+
 		return nil
 	}
 
